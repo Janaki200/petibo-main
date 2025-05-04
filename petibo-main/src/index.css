@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Delius&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ADD THIS */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+    .text-shadow {
+        text-shadow: 2px 2px 2px #1128015b;
+    }
+    .img-shadow {
+        filter: drop-shadow(40px 30px 25px #352929eb)
+    }
+    .img-shadow3 {
+        filter: drop-shadow(-40px 30px 25px #352929eb)
+    }
+    .img-shadow2 {
+        filter: drop-shadow(10px 30px 15px #3030307a)
+    }
+    .primary-btn {
+        @apply border border-black px-4 py-2 rounded-lg;
+    }
+    .input-style {
+        @apply px-4 py-2 border-[1px] border-gray-400 rounded-md;
+    }
+}
