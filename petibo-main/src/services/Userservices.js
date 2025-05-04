@@ -1,62 +1,122 @@
-import { db } from "@/firebase/config";
+import { db } from "../firebase/config";
 import {
   collection,
   addDoc,
   query,
   where,
-  getDocs,
+  getDocs
 } from "firebase/firestore";
 
-// Define a reference to the "admin" collection in Firestore
-const UserRef = collection(db, "user");
+const userRef = collection(db, "user");
+const serviceRef = collection(db, "service")
 
 class UserServices {
-  /**
-   * Registers a new admin user.
-   * @param user - The admin data to be registered.  This should come from your UI form.
-   * @returns A Promise that resolves with the result of adding the document.
-   */
-  async registerUser(user) {
-    try {
-      const docRef = await addDoc(adminRef, admin);
-      console.log("user registered with ID: ", docRef.id); // Good for debugging
-      return { success: true, adminId: docRef.id }; // Return a success object
-    } catch (error) {
-      console.error("Error registering user: ", error);
-      throw error; // Re-throw the error so the UI can handle it
-    }
+
+  async registeruser(user) {
+    return await addDoc(userRef, user);
   }
 
-  /**
-   * Logs in an admin user.
-   * @param admin - The admin data containing email, password, and role from the UI form.
-   * @returns A Promise that resolves with the admin data if login is successful.
-   * @throws An error if the admin is not found or the credentials are incorrect.
-   */
-  async loginUser(user) {
+  async loginuser(user) {
     try {
       const q = query(
-        adminRef,
-        where("name", "==", admin.name),
-        where("email", "==", admin.email), // IMPORTANT:  In real apps, hash the password.
-        where("password", "==", admin.password)
+        userRef,
+        where("email", "==", user.email),
+        where("password", "==", user.password),
       );
 
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        throw new Error("Admin not found or incorrect credentials");
+        throw new Error("user not found or incorrect credentials");
       }
 
-      const adminData = querySnapshot.docs[0].data();
-      console.log("User logged in: ", userData);
-      return { success: true, user: userData }; // Return success and admin data
+      const userDoc = querySnapshot.docs[0].data();
+      return userDoc;
+
     } catch (error) {
-      console.error("Error logging in admin: ", error);
-      throw error; // Re-throw to be handled in UI
+      if (error instanceof Error) {
+        throw new Error(error.message || "Login failed");
+      } else {
+        throw new Error("An unknown error occurred during login");
+      }
     }
   }
+
+  async fetchUser(email) {
+    try {
+      // Query to fetch the user by email
+      const q = query(userRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      // Check if a user document is found
+      if (!querySnapshot.empty) {
+        // Assuming the document exists, get the first document
+        const userDoc = querySnapshot.docs[0].data();
+        const user = {
+          name: userDoc.name,
+          phone: userDoc.phone,
+        };
+        return user; // Return the user details (name and phone number)
+      } else {
+        throw new Error("User not found.");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message || "Login failed");
+      } else {
+        throw new Error("An unknown error occurred during login");
+      }
+    }
+  }
+
+  async fetchServices() {
+    try {
+      const q = query(
+        collection(db, "admin"),
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      const daycares = querySnapshot.docs.map(doc => {
+        const { name, email, role, place, phoneNumber } = doc.data();
+        return { name, email, role, place, phoneNumber };
+      });
+
+      return daycares;
+
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message || "Daycare fetching failed");
+      } else {
+        throw new Error("An unknown error occurred during daycare fetch");
+      }
+    }
+  }
+
+  async bookServicecare(req) {
+    return await addDoc(serviceRef, req);
+  }
+
+  async fetchServiceReq(email){
+    try {
+      const q = query(serviceRef, where("ownerEmail", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      const daycares = querySnapshot.docs.map(doc => {
+        const { petName, ownerName, phoneNumber, date, time,specialInstructions, place, serviceEmail, serviceType,status,ownerEmail   } = doc.data();
+        return {petName, ownerName, phoneNumber, date, time,specialInstructions, place, serviceEmail, serviceType,status,ownerEmail };
+      });
+
+      return daycares;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message || "Daycare fetching failed");
+      } else {
+        throw new Error("An unknown error occurred during daycare fetch");
+      }
+    }
+  }
+
 }
 
-const UserServices = new UserServices(); // Create an instance.  Important for UI usage.
-export default UserService; //  Make sure to export the instance, not the class.
+export default new UserServices();

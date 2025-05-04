@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import signup from '../assets/signup.jpg';
+import UserServices from '../services/Userservices';
 
 const Signup = () => {
-  const [form, setForm] = useState({ email: '', password: '', name: '' });
+  const [form, setForm] = useState({ email: '', password: '', name: '', phone: '' });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     if (form.email && form.password && form.name) {
+    try {
+      const user = {
+        name: form.name ,
+        email: form.email,
+        password: form.password ,
+        phone: form.phone
+      }
+      await UserServices.registeruser(user)
       alert('Account created successfully!');
       navigate('/'); // redirect to login
+    } catch (error) {
+      alert(error)
+    }
     } else {
       alert('Please fill in all fields.');
     }
@@ -41,6 +53,15 @@ const Signup = () => {
             name="name"
             placeholder="Full Name"
             value={form.name}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded"
+          />
+           <input
+            type="phone"
+            name="phone"
+            placeholder="Phone"
+            value={form.phone}
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded"

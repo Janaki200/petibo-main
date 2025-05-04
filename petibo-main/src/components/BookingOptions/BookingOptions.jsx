@@ -10,14 +10,14 @@ const BookingOptions = () => {
 
       <div className="flex flex-col md:flex-row justify-center gap-10">
         <button
-          onClick={() => navigate('/veterinary-booking')}
+          onClick={() => navigate('/daycares')}
           className="bg-purple-700 text-white px-8 py-4 rounded-xl text-xl hover:bg-purple-900 transition"
         >
           Veterinary Booking
         </button>
 
         <button
-          onClick={() => navigate('/daycare-booking')}
+          onClick={() => navigate('/clinics')}
           className="bg-teal-600 text-white px-8 py-4 rounded-xl text-xl hover:bg-teal-800 transition"
         >
           Day Care Booking

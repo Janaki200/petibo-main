@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import login from '../assets/login.jpg'; // Ensure the path is correct
+import Userservices from '../services/Userservices';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -10,11 +11,24 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Dummy authentication check
     if (form.email && form.password) {
-      navigate('/home'); // redirect after login
+      
+      try {
+      const user = {
+        email: form.email,
+        password: form.password
+      }
+      await Userservices.loginuser(user)
+      localStorage.setItem('email', user.email);
+      navigate('/home'); 
+      } catch (error) {
+        alert(error)
+        // alert('Invalid login credentials.');
+      }
+      
     } else {
       alert('Invalid login credentials.');
     }

@@ -14,6 +14,8 @@ import Confirmationpage from './components/Confirmationpage/Confirmationpage';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 import Home from './components/Home/Home';
+import Daycares from './components/DaycareBooking/Daycares';
+import ServiceHistory from './components/DaycareBooking/ServiceHistory';
 
 const App = () => {
   return (
@@ -47,6 +49,8 @@ const App = () => {
         <Route path="/veterinary-booking" element={<VeterinaryBooking />} />
         <Route path="/daycare-booking" element={<DaycareBooking />} />
         <Route path="/confirmationpage" element={<Confirmationpage />} />
+        <Route path='/daycares' element= {<Daycares/>}/>
+        <Route path='/history' element =  {<ServiceHistory/>}/>
       </Routes>
     </main>
   );

@@ -6,9 +6,12 @@ const Banner = () => {
   const navigate = useNavigate();
 
   const handleReserveClick = () => {
-    navigate('/booking-options');
+    navigate('/daycares');
   };
 
+  const handleHistory = () => {
+    navigate("/history")
+  }
   return ( 
     <div className='container my-14 md:px-12 md:py-6 bg-primaryDark'>
       <div className='grid grid-cols-1 sm:grid-cols-2 relative min-h-[650px]
@@ -25,6 +28,12 @@ const Banner = () => {
               className='primary-btn bg-primaryDark hover:bg-purple-900 hover:text-white font-semibold'
             >
               Reserve Now
+            </button>
+            <button 
+              onClick={handleHistory}
+              className='primary-btn bg-primaryDark hover:bg-purple-900 hover:text-white font-semibold'
+            >
+             History
             </button>
           </div>
         </div>
