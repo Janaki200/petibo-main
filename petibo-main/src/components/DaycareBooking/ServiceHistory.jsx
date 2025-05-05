@@ -61,7 +61,7 @@ const ServiceHistory = () => {
                 <p><strong>Service Provider Email:</strong> {service.serviceEmail}</p>
                 <p><strong>Owner Email:</strong> {service.ownerEmail}</p>
                 {service.specialInstructions && (
-                  <p><strong>Special Instructions:</strong> {service.specialInstructions}</p>
+                  <p><strong>Special Instructions</strong> {service.specialInstructions}</p>
                 )}
               </div>
             );
