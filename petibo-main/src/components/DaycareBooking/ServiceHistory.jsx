@@ -18,7 +18,7 @@ const ServiceHistory = () => {
         setServices(result);
       } catch (err) {
         console.error('Error fetching services:', err);
-        alert(err)
+        alert(err);
       } finally {
         setLoading(false);
       }
@@ -37,23 +37,35 @@ const ServiceHistory = () => {
         <p className="text-center text-gray-500">No service records found.</p>
       ) : (
         <div className="space-y-4">
-          {services.map((service, index) => (
-            <div key={index} className="border border-gray-300 p-4 rounded-md shadow-sm">
-              <p><strong>Pet Name:</strong> {service.petName}</p>
-              <p><strong>Owner Name:</strong> {service.ownerName}</p>
-              <p><strong>Phone Number:</strong> {service.phoneNumber}</p>
-              <p><strong>Date:</strong> {service.date}</p>
-              <p><strong>Time:</strong> {service.time}</p>
-              <p><strong>Place:</strong> {service.place}</p>
-              <p><strong>Service Type:</strong> {service.serviceType}</p>
-              <p><strong>Status:</strong> {service.status}</p>
-              <p><strong>Service Provider Email:</strong> {service.serviceEmail}</p>
-              <p><strong>Owner Email:</strong> {service.ownerEmail}</p>
-              {service.specialInstructions && (
-                <p><strong>Special Instructions:</strong> {service.specialInstructions}</p>
-              )}
-            </div>
-          ))}
+          {services.map((service, index) => {
+            // Conditional class assignment based on status
+            let tileStyle = '';
+            if (service.status === 'Completed') {
+              tileStyle = 'border-green-500 bg-green-50';
+            } else if (service.status.startsWith('Scheduled')) {
+              tileStyle = 'border-blue-500 bg-blue-50';
+            } else {
+              tileStyle = 'border-gray-300 bg-white';
+            }
+
+            return (
+              <div key={index} className={`border p-4 rounded-md shadow-sm ${tileStyle}`}>
+                <p><strong>Pet Name:</strong> {service.petName}</p>
+                <p><strong>Owner Name:</strong> {service.ownerName}</p>
+                <p><strong>Phone Number:</strong> {service.phoneNumber}</p>
+                <p><strong>Date:</strong> {service.date}</p>
+                <p><strong>Time:</strong> {service.time}</p>
+                <p><strong>Place:</strong> {service.place}</p>
+                <p><strong>Service Type:</strong> {service.serviceType}</p>
+                <p><strong>Status:</strong> {service.status}</p>
+                <p><strong>Service Provider Email:</strong> {service.serviceEmail}</p>
+                <p><strong>Owner Email:</strong> {service.ownerEmail}</p>
+                {service.specialInstructions && (
+                  <p><strong>Special Instructions:</strong> {service.specialInstructions}</p>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

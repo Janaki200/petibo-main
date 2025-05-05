@@ -16,6 +16,9 @@ import Signup from './Auth/Signup';
 import Home from './components/Home/Home';
 import Daycares from './components/DaycareBooking/Daycares';
 import ServiceHistory from './components/DaycareBooking/ServiceHistory';
+import AdminLogin from './admin/auth/AdminLogin';
+import AdminRegister from './admin/auth/AdminRegister';
+import AdminHome from './admin/home/AdminHome';
 
 const App = () => {
   return (
@@ -51,6 +54,9 @@ const App = () => {
         <Route path="/confirmationpage" element={<Confirmationpage />} />
         <Route path='/daycares' element= {<Daycares/>}/>
         <Route path='/history' element =  {<ServiceHistory/>}/>
+        <Route path='/admin' element =  {<AdminLogin/>}/>
+        <Route path='/admin/register' element =  {<AdminRegister/>}/>
+        <Route path='/admin/home' element =  {<AdminHome/>}/>
       </Routes>
     </main>
   );

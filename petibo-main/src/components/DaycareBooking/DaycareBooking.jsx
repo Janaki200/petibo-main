@@ -89,7 +89,7 @@ const DayCareBooking = () => {
 
   return (
     <div className="container mx-auto my-20 max-w-xl p-6 bg-white rounded-xl shadow-lg">
-      <h1 className="text-3xl font-bold text-center text-purple-800 mb-6">Pet Daycare Booking</h1>
+      <h1 className="text-3xl font-bold text-center text-purple-800 mb-6">Pet Service Booking</h1>
       
       {/* Display daycare details */}
       <div className="bg-gray-100 p-4 mb-6 rounded-md shadow-sm">
@@ -164,7 +164,7 @@ const DayCareBooking = () => {
           className="w-full p-3 border border-gray-300 rounded"
         />
         <button type="submit" className="primary-btn w-full hover:bg-purple-900">
-          Book Daycare
+          Book Service
         </button>
       </form>
     </div>
